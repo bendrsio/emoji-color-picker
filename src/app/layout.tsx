@@ -14,7 +14,28 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Emoji Color Picker",
-  description: "",
+  description: "Find an emoji that matches a color",
+  openGraph: {
+    title: "Emoji Color Picker",
+    description: "Find an emoji that matches a color",
+    url: "https://emoji.desprets.net",
+    siteName: "Emoji Color Picker",
+    images: [
+      {
+        url: "https://emoji.desprets.net/preview.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Emoji Color Picker",
+    description: "Find an emoji that matches a color",
+    images: ["https://emoji.desprets.net/preview.png"],
+  },
 };
 
 export default function RootLayout({
