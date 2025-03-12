@@ -192,22 +192,6 @@
     "area": 0.710479736328125
   },
   {
-    "emoji": "♀️",
-    "name": "female_sign",
-    "unicode": "U+2640 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.1575164794921875
-  },
-  {
-    "emoji": "♂️",
-    "name": "male_sign",
-    "unicode": "U+2642 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.171295166015625
-  },
-  {
     "emoji": "♟️",
     "name": "chess_pawn",
     "unicode": "U+265F U+FE0F",
@@ -286,14 +270,6 @@
     "hex": "#808287",
     "rgb": [128, 130, 135],
     "area": 0.3797149658203125
-  },
-  {
-    "emoji": "⚕️",
-    "name": "medical_symbol",
-    "unicode": "U+2695 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.1543121337890625
   },
   {
     "emoji": "⚖️",
@@ -464,38 +440,6 @@
     "area": 0.57550048828125
   },
   {
-    "emoji": "⛹️‍♂️",
-    "name": "man_bouncing_ball",
-    "unicode": "U+26F9 U+FE0F U+200D U+2642 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.261749267578125
-  },
-  {
-    "emoji": "⛹‍♂️",
-    "name": "man_bouncing_ball",
-    "unicode": "U+26F9 U+200D U+2642 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.261749267578125
-  },
-  {
-    "emoji": "⛹️‍♂",
-    "name": "man_bouncing_ball",
-    "unicode": "U+26F9 U+FE0F U+200D U+2642",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.261749267578125
-  },
-  {
-    "emoji": "⛹‍♂",
-    "name": "man_bouncing_ball",
-    "unicode": "U+26F9 U+200D U+2642",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.261749267578125
-  },
-  {
     "emoji": "⛹🏿‍♂️",
     "name": "man_bouncing_ball_dark_skin_tone",
     "unicode": "U+26F9 U+1F3FF U+200D U+2642 U+FE0F",
@@ -622,38 +566,6 @@
     "hex": "#967F6D",
     "rgb": [150, 127, 109],
     "area": 0.356109619140625
-  },
-  {
-    "emoji": "⛹️‍♀️",
-    "name": "woman_bouncing_ball",
-    "unicode": "U+26F9 U+FE0F U+200D U+2640 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.26788330078125
-  },
-  {
-    "emoji": "⛹‍♀️",
-    "name": "woman_bouncing_ball",
-    "unicode": "U+26F9 U+200D U+2640 U+FE0F",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.26788330078125
-  },
-  {
-    "emoji": "⛹️‍♀",
-    "name": "woman_bouncing_ball",
-    "unicode": "U+26F9 U+FE0F U+200D U+2640",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.26788330078125
-  },
-  {
-    "emoji": "⛹‍♀",
-    "name": "woman_bouncing_ball",
-    "unicode": "U+26F9 U+200D U+2640",
-    "hex": "#000000",
-    "rgb": [0, 0, 0],
-    "area": 0.26788330078125
   },
   {
     "emoji": "⛹🏿‍♀️",

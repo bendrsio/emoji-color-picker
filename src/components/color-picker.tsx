@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useState, useEffect } from "react";
 import { HexColorPicker } from "react-colorful";
-import { Copy, Check, AlertCircle } from "lucide-react";
+import { Copy, Check, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,8 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 
 type EmojiData = {
   emoji: string;
@@ -26,17 +24,25 @@ type EmojiData = {
   area: number;
 };
 
-// Removed hardcoded emoji color data
 export const ColorPicker = () => {
   const [color, setColor] = useState("#7C4DFF");
   const [isValidColor, setIsValidColor] = useState(true);
   const [copied, setCopied] = useState(false);
   const [emojiCopied, setEmojiCopied] = useState(false);
   const [matchingEmoji, setMatchingEmoji] = useState<EmojiData | null>(null);
-  const [emojiInput, setEmojiInput] = useState("");
   const [emojiColorData, setEmojiColorData] = useState<EmojiData[]>([]);
   const [loadingEmojis, setLoadingEmojis] = useState(true);
   const [error, setError] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (darkMode) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     fetch("/emoji_list.json")
@@ -90,34 +96,6 @@ export const ColorPicker = () => {
     }
   };
 
-  const handleEmojiInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    // Only keep the last character if it's an emoji
-    if (value.length > 0) {
-      const lastChar = value.slice(-1);
-      const lastTwoChars = value.slice(-2);
-
-      if (findEmojiByCharacter(lastTwoChars)) {
-        setEmojiInput(lastTwoChars);
-        const foundEmoji = findEmojiByCharacter(lastTwoChars);
-        if (foundEmoji) {
-          setColor(foundEmoji.hex);
-        }
-      } else if (findEmojiByCharacter(lastChar)) {
-        setEmojiInput(lastChar);
-        const foundEmoji = findEmojiByCharacter(lastChar);
-        if (foundEmoji) {
-          setColor(foundEmoji.hex);
-        }
-      } else {
-        setEmojiInput(value.length === 1 ? value : lastChar);
-      }
-    } else {
-      setEmojiInput("");
-    }
-  };
-
   const hexToRgb = (hex: string) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
@@ -165,174 +143,134 @@ export const ColorPicker = () => {
     return /^#([A-Fa-f0-9]{6})$/.test(color);
   };
 
-  const isSingleEmoji = (str: string) => {
-    return (
-      str.length === 1 ||
-      (str.length === 2 && /[\uD800-\uDBFF][\uDC00-\uDFFF]/.test(str))
-    );
-  };
-
   const rgb = hexToRgb(color);
 
   if (loadingEmojis) return <p>Loading emojis...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Card className="w-full shadow-lg">
-      <CardHeader>
+    <Card className="w-full max-w-4xl shadow-lg relative">
+      <div className="absolute top-4 right-4 z-10">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setDarkMode(!darkMode)}
+          title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {darkMode ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+        </Button>
+      </div>
+
+      <CardHeader className="pb-2">
         <CardTitle>Color Picker</CardTitle>
         <CardDescription>
           Select a color to find a matching emoji
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-          <div className="flex-1">
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+          {/* Left Side - takes 3 columns */}
+          <div className="md:col-span-3">
             <HexColorPicker
-              color={isValidColor ? color : "#CCCCCC"}
+              color={isValidColor ? color : "#000000"}
               onChange={setColor}
               className="w-full"
             />
-          </div>
-          <div className="flex flex-col justify-between space-y-4">
-            <div
-              className="w-full h-20 rounded-lg border shadow-sm overflow-hidden"
-              style={{ backgroundColor: isValidColor ? color : "#CCCCCC" }}
-            >
-              {!isValidColor && (
-                <div className="h-full w-full flex items-center justify-center bg-background/50 text-muted-foreground">
-                  <AlertCircle className="h-5 w-5 mr-2" />
-                  <span>Invalid color</span>
+            <div className="space-y-3">
+              <div className="flex space-x-2">
+                <div className="flex-1">
+                  <div className="flex mt-1 items-center">
+                    <div
+                      className="w-6 h-6 rounded-full mr-2 border flex-shrink-0"
+                      style={{
+                        backgroundColor: color,
+                      }}
+                    ></div>
+                    <Input
+                      id="hex-color"
+                      value={color}
+                      onChange={handleInputChange}
+                      className={`rounded-r-none h-8 text-sm ${
+                        !isValidColor ? "border-red-500" : ""
+                      }`}
+                    />
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-l-none border-l-0 h-8 w-8"
+                      onClick={copyToClipboard}
+                      disabled={!isValidColor}
+                    >
+                      {copied ? (
+                        <Check className="h-3 w-3" />
+                      ) : (
+                        <Copy className="h-3 w-3" />
+                      )}
+                    </Button>
+                  </div>
                 </div>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="hex-color">Hex Color</Label>
-              <div className="flex">
-                <Input
-                  id="hex-color"
-                  value={color}
-                  onChange={handleInputChange}
-                  className={`rounded-r-none ${
-                    !isValidColor ? "border-red-500" : ""
-                  }`}
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-l-none border-l-0"
-                  onClick={copyToClipboard}
-                  disabled={!isValidColor}
-                >
-                  {copied ? (
-                    <Check className="h-4 w-4" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-3 gap-4 pt-2">
-          <div className="space-y-1">
-            <Label>Red</Label>
-            <div className="bg-red-500/30 h-1 w-full rounded-full">
-              <div
-                className="bg-red-700 h-1 rounded-full"
-                style={{
-                  width: isValidColor ? `${(rgb.r / 255) * 100}%` : "0%",
-                }}
-              />
-            </div>
-            <p className="text-sm text-muted-foreground text-right">
-              {isValidColor ? rgb.r : "-"}
-            </p>
-          </div>
-          <div className="space-y-1">
-            <Label>Green</Label>
-            <div className="bg-green-500/30 h-1 w-full rounded-full">
-              <div
-                className="bg-green-700 h-1 rounded-full"
-                style={{
-                  width: isValidColor ? `${(rgb.g / 255) * 100}%` : "0%",
-                }}
-              />
-            </div>
-            <p className="text-sm text-muted-foreground text-right">
-              {isValidColor ? rgb.g : "-"}
-            </p>
-          </div>
-          <div className="space-y-1">
-            <Label>Blue</Label>
-            <div className="bg-blue-500/30 h-1 w-full rounded-full">
-              <div
-                className="bg-blue-700 h-1 rounded-full"
-                style={{
-                  width: isValidColor ? `${(rgb.b / 255) * 100}%` : "0%",
-                }}
-              />
-            </div>
-            <p className="text-sm text-muted-foreground text-right">
-              {isValidColor ? rgb.b : "-"}
-            </p>
-          </div>
-        </div>
-
-        <Separator />
-
-        <div className="pt-2">
-          <h3 className="text-sm font-medium mb-4">Matching Emoji</h3>
-
-          {isValidColor && matchingEmoji ? (
-            <div className="flex items-center space-x-4">
-              <div className="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center bg-background shadow-sm border">
-                <span className="text-4xl">{matchingEmoji.emoji}</span>
-              </div>
-              <div className="flex-1">
-                <h4 className="font-medium">{matchingEmoji.name}</h4>
-                <div className="flex items-center mt-1">
-                  <div
-                    className="w-6 h-6 rounded-full mr-2 border"
-                    style={{ backgroundColor: matchingEmoji.hex }}
-                  ></div>
-                  <span className="text-sm text-muted-foreground">
-                    {matchingEmoji.hex}
-                  </span>
-                </div>
+          {/* Right side - takes 3 columns */}
+          <div className="md:col-span-3 flex flex-col justify-between space-y-3">
+            {isValidColor && matchingEmoji ? (
+              <div className="relative flex flex-col items-center justify-center bg-background/5 rounded-lg p-2 border h-50">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="mt-1 h-8 px-2"
+                  className="absolute top-2 right-2 h-7 px-2"
                   onClick={copyEmojiToClipboard}
                 >
                   {emojiCopied ? (
-                    <Check className="h-3 w-3 mr-1" />
+                    <Check className="h-3 w-3" />
                   ) : (
-                    <Copy className="h-3 w-3 mr-1" />
+                    <Copy className="h-3 w-3" />
                   )}
-                  {emojiCopied ? "Copied!" : "Copy Emoji"}
                 </Button>
+                <div className="text-[100px] leading-none mb-2">
+                  {matchingEmoji.emoji}
+                </div>
+                <h4 className="font-medium text-center truncate text-sm">
+                  {(() => {
+                    const sanitizedName = matchingEmoji.name
+                      .replace(
+                        /_(?:dark|medium|light|medium-dark|medium-light)_skin_tone/gi,
+                        ""
+                      )
+                      .replace(/facing_(?:right|left)/g, " ")
+                      .replace(/_/g, " ");
+                    return sanitizedName;
+                  })()}
+                </h4>
               </div>
-            </div>
-          ) : (
-            <div className="text-muted-foreground text-sm italic">
-              Enter a valid hex color to see the matching emoji
-            </div>
-          )}
+            ) : (
+              <div className="flex items-center justify-center h-[180px] bg-background/5 rounded-lg border">
+                <div className="text-muted-foreground text-sm italic text-center px-4">
+                  {isValidColor
+                    ? "Select a color to see matching emoji"
+                    : "Enter a valid hex color"}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="pt-2">
-          <Label htmlFor="emoji-input">Type an emoji</Label>
-          <Input
-            id="emoji-input"
-            value={emojiInput}
-            onChange={handleEmojiInputChange}
-            placeholder="Enter an emoji to find its color"
-            className="mt-1"
-          />
+        {/* Credit footer */}
+        <div className="pt-2 mt-2 border-t border-border">
+          <a
+            href="https://github.com/bendsp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Ben Desprets - 2025
+          </a>
         </div>
       </CardContent>
     </Card>
