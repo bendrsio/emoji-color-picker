@@ -167,7 +167,7 @@ export const ColorPicker = () => {
         </Button>
       </div>
 
-      <CardHeader className="pb-2">
+      <CardHeader className="">
         {/* <CardTitle>Color Picker</CardTitle> */}
         <CardDescription>
           Select a color to find a matching emoji
@@ -176,11 +176,11 @@ export const ColorPicker = () => {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           {/* Left Side - takes 3 columns */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 flex flex-col space-y-4">
             <HexColorPicker
               color={isValidColor ? color : "#000000"}
               onChange={setColor}
-              className="w-full"
+              className="w-full flex justify-center"
             />
             <div className="space-y-3">
               <div className="flex space-x-2">
@@ -222,7 +222,7 @@ export const ColorPicker = () => {
           {/* Right side - takes 3 columns */}
           <div className="md:col-span-3 flex flex-col justify-between space-y-3">
             {isValidColor && matchingEmoji ? (
-              <div className="relative flex flex-col items-center justify-center bg-background/5 rounded-lg p-2 border h-50">
+              <div className="relative flex flex-col items-center justify-center bg-background/5 rounded-lg p-2 border h-30 sm:h-50">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -235,7 +235,7 @@ export const ColorPicker = () => {
                     <Copy className="h-3 w-3" />
                   )}
                 </Button>
-                <div className="text-[100px] leading-none mb-2">
+                <div className="text-[75px] sm:text-[100px] leading-none mb-2">
                   {matchingEmoji.emoji}
                 </div>
                 <h4 className="font-medium text-center truncate text-sm">
@@ -297,7 +297,7 @@ export const ColorPicker = () => {
             href="https://github.com/bendrsio/emoji-color-data"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors underline"
+            className="text-[10px] sm:text-xs text-muted-foreground hover:text-foreground transition-colors underline"
           >
             Get My Emoji Data Here (Emojis RGB Color Averages)
           </a>
