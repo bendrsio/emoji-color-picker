@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: "Emoji Color Picker",
     images: [
       {
-        url: "https://emoji.desprets.net/preview.png",
+        url: "https://emoji.desprets.net/preview.jpg",
         width: 800,
         height: 600,
       },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Emoji Color Picker",
     description: "Find an emoji that matches a color",
-    images: ["https://emoji.desprets.net/preview.png"],
+    images: ["https://emoji.desprets.net/preview.jpg"],
   },
 };
 
