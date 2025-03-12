@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { HexColorPicker } from "react-colorful";
 import { Copy, Check, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import GitHubButton from "react-github-btn";
+
 import {
   Card,
   CardContent,
@@ -166,7 +168,7 @@ export const ColorPicker = () => {
       </div>
 
       <CardHeader className="pb-2">
-        <CardTitle>Color Picker</CardTitle>
+        {/* <CardTitle>Color Picker</CardTitle> */}
         <CardDescription>
           Select a color to find a matching emoji
         </CardDescription>
@@ -262,14 +264,42 @@ export const ColorPicker = () => {
         </div>
 
         {/* Credit footer */}
-        <div className="pt-2 mt-2 border-t border-border">
-          <a
-            href="https://github.com/bendsp"
+        <div className="border-t border-border items-center flex justify-between items-center pt-2">
+          {/* <a
+            href="https://x.com/bendrsio"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs hover:text-foreground transition-colors underline"
           >
-            Ben Desprets - 2025
+            Follow @bendrsio on X
+          </a> */}
+          <a
+            href="https://twitter.com/bendrsio?ref_src=twsrc%5Etfw"
+            className="twitter-follow-button"
+            data-show-count="true"
+          >
+            Follow @bendrsio
+          </a>
+          <script async src="https://platform.twitter.com/widgets.js"></script>
+          <GitHubButton
+            href="https://github.com/bendrsio/emoji-color-picker"
+            data-color-scheme="no-preference: light; light: light; dark: dark;"
+            data-icon="octicon-star"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Star bendrsio/emoji-color-picker on GitHub"
+          >
+            Star
+          </GitHubButton>
+        </div>
+        <div className="flex justify-center">
+          <a
+            href="https://github.com/bendrsio/emoji-color-data"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors underline"
+          >
+            Get My Emoji Data Here (Emojis RGB Color Averages)
           </a>
         </div>
       </CardContent>
