@@ -294,12 +294,12 @@ export const ColorPicker = () => {
         </div>
         <div className="flex justify-center">
           <a
-            href="https://github.com/bendrsio/emoji-color-data"
+            href="https://www.desprets.net"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[10px] sm:text-xs text-muted-foreground hover:text-foreground transition-colors underline"
           >
-            Get My Emoji Data Here (Emojis RGB Color Averages)
+            © 2025 Benjamin Desprets
           </a>
         </div>
       </CardContent>
